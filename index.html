@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- The trick: Prevent caching so users always see the latest version -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
@@ -12,9 +11,6 @@
         :root {
             --bg: #ffffff;
             --text: #2d3436;
-            --accent: #00b894;
-            --secondary: #636e72;
-            --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         * {
@@ -23,177 +19,113 @@
             padding: 0;
         }
 
-        html {
-            scroll-behavior: smooth;
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', sans-serif;
+            background-color: #f0f0f0;
         }
 
-        body {
-            font-family: var(--sans);
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Cover Section */
-        .cover {
+        .main-container {
+            position: relative;
             height: 100vh;
             width: 100vw;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
+            background: url('Bernard 333 color 18x24.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* The central baby image/focus point */
+        .baby-container {
             position: relative;
-            background-color: #f9f9f9;
-        }
-
-        .cover img {
-            max-width: 90%;
-            max-height: 80vh;
-            object-fit: contain;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .cover:hover img {
-            transform: scale(1.02);
-        }
-
-        .scroll-hint {
-            position: absolute;
-            bottom: 30px;
-            font-size: 0.9rem;
-            color: var(--secondary);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
-        }
-
-        /* Content Section */
-        .content {
-            min-height: 100vh;
-            padding: 80px 20px;
+            z-index: 10;
+            width: 60vh;
+            height: 60vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            max-width: 600px;
-            margin: 0 auto;
         }
 
-        .subscription-box {
-            background: #fff;
-            padding: 40px;
+        .baby-img {
+            max-width: 100%;
+            max-height: 100%;
             border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            width: 100%;
-            text-align: center;
-            border: 1px solid #eee;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border: 8px solid white;
         }
 
-        h2 {
-            margin-bottom: 15px;
-            font-weight: 600;
-            color: var(--text);
+        /* Dancing Names */
+        .name {
+            position: absolute;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            pointer-events: none;
+            user-select: none;
+            white-space: nowrap;
         }
 
-        p {
-            color: var(--secondary);
-            margin-bottom: 30px;
+        /* Different colors for names */
+        .n1 { color: #FF9AA2; }
+        .n2 { color: #FFB7B2; }
+        .n3 { color: #FFDAC1; }
+        .n4 { color: #E2F0CB; }
+        .n5 { color: #B5EAD7; }
+        .n6 { color: #C7CEEA; }
+
+        @keyframes dance {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(15px, -15px) rotate(5deg); }
+            50% { transform: translate(-10px, 10px) rotate(-5deg); }
+            75% { transform: translate(10px, 15px) rotate(3deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
         }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .name-wrapper {
+            position: absolute;
+            animation: float around 20s infinite linear;
         }
 
-        input[type="email"] {
-            padding: 15px;
-            border: 2px solid #eee;
-            border-radius: 10px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s ease;
+        @keyframes float-around {
+            from { transform: rotate(0deg) translateX(35vh) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(35vh) rotate(-360deg); }
         }
 
-        input[type="email"]:focus {
-            border-color: var(--accent);
-        }
+        /* Manual positioning and custom dance offsets */
+        .w1 { top: 20%; left: 20%; animation: dance 4s infinite ease-in-out; }
+        .w2 { top: 15%; right: 25%; animation: dance 5s infinite ease-in-out -1s; }
+        .w3 { bottom: 25%; left: 15%; animation: dance 4.5s infinite ease-in-out -2s; }
+        .w4 { bottom: 20%; right: 20%; animation: dance 3.5s infinite ease-in-out -0.5s; }
+        .w5 { top: 50%; left: 5%; animation: dance 6s infinite ease-in-out -3s; }
+        .w6 { top: 45%; right: 5%; animation: dance 5.5s infinite ease-in-out -1.5s; }
 
-        button {
-            padding: 15px;
-            background-color: var(--text);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #000;
-        }
-
-        /* Mobile Adjustments */
         @media (max-width: 600px) {
-            .cover img {
-                max-width: 95%;
-            }
-            .subscription-box {
-                padding: 30px 20px;
-            }
+            .name { font-size: 1.2rem; }
+            .baby-container { width: 80vw; height: 80vw; }
+            .w1 { top: 10%; }
+            .w2 { top: 5%; }
+            .w6 { right: 2%; }
         }
     </style>
 </head>
 <body>
 
-    <section class="cover" id="cover" onclick="scrollToContent()">
-        <img src="Gemini_Generated_Image_lthlazlthlazlthl.png" alt="Bernaptism Invitation">
-        <div class="scroll-hint">Tap or scroll to continue ↓</div>
-    </section>
-
-    <section class="content" id="subscription">
-        <div class="subscription-box">
-            <h2>Subscribe</h2>
-            <p>Receive an email when there are changes to this digital invitation.</p>
-            <form id="subscribe-form">
-                <input type="email" placeholder="your@email.com" required>
-                <button type="submit">Keep me updated</button>
-            </form>
-            <div id="msg" style="margin-top: 20px; display: none; color: var(--accent); font-weight: 600;">
-                Thanks! You're on the list.
-            </div>
+    <div class="main-container">
+        <div class="baby-container">
+            <img src="Gemini_Generated_Image_lthlazlthlazlthl.png" class="baby-img" alt="Bernard">
         </div>
-    </section>
 
-    <script>
-        function scrollToContent() {
-            document.getElementById('subscription').scrollIntoView({ behavior: 'smooth' });
-        }
+        <div class="name w1 n1">Bernard</div>
+        <div class="name w2 n2">Bernardo</div>
+        <div class="name w3 n3">Bernat</div>
+        <div class="name w4 n4">Bernardín</div>
+        <div class="name w5 n5">Bernardí</div>
+        <div class="name w6 n6">Bernie</div>
+    </div>
 
-        // Form handling
-        const form = document.getElementById('subscribe-form');
-        const msg = document.getElementById('msg');
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = form.querySelector('input').value;
-            console.log('Subscription for:', email);
-            
-            // For now, just show a success message
-            form.style.display = 'none';
-            msg.style.display = 'block';
-            
-            // Note: In a real deployment, we'd send this to a service like Formspree
-        });
-    </script>
 </body>
 </html>
