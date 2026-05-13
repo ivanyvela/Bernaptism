@@ -9,31 +9,191 @@
     <meta http-equiv="Expires" content="0" />
     <title>Bernaptism</title>
     <style>
-        body {
+        :root {
+            --bg: #ffffff;
+            --text: #2d3436;
+            --accent: #00b894;
+            --secondary: #636e72;
+            --sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--sans);
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Cover Section */
+        .cover {
+            height: 100vh;
+            width: 100vw;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background-color: #f0f0f0;
-            font-family: sans-serif;
+            cursor: pointer;
+            position: relative;
+            background-color: #f9f9f9;
         }
-        .container {
-            text-align: center;
-        }
-        img {
+
+        .cover img {
             max-width: 90%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .cover:hover img {
+            transform: scale(1.02);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* Content Section */
+        .content {
+            min-height: 100vh;
+            padding: 80px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .subscription-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            width: 100%;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        p {
+            color: var(--secondary);
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input[type="email"] {
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="email"]:focus {
+            border-color: var(--accent);
+        }
+
+        button {
+            padding: 15px;
+            background-color: var(--text);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #000;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .cover img {
+                max-width: 95%;
+            }
+            .subscription-box {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Bernaptism</h1>
+
+    <section class="cover" id="cover" onclick="scrollToContent()">
         <img src="Gemini_Generated_Image_lthlazlthlazlthl.png" alt="Bernaptism Invitation">
-    </div>
+        <div class="scroll-hint">Tap or scroll to continue ↓</div>
+    </section>
+
+    <section class="content" id="subscription">
+        <div class="subscription-box">
+            <h2>Subscribe</h2>
+            <p>Receive an email when there are changes to this digital invitation.</p>
+            <form id="subscribe-form">
+                <input type="email" placeholder="your@email.com" required>
+                <button type="submit">Keep me updated</button>
+            </form>
+            <div id="msg" style="margin-top: 20px; display: none; color: var(--accent); font-weight: 600;">
+                Thanks! You're on the list.
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function scrollToContent() {
+            document.getElementById('subscription').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Form handling
+        const form = document.getElementById('subscribe-form');
+        const msg = document.getElementById('msg');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = form.querySelector('input').value;
+            console.log('Subscription for:', email);
+            
+            // For now, just show a success message
+            form.style.display = 'none';
+            msg.style.display = 'block';
+            
+            // Note: In a real deployment, we'd send this to a service like Formspree
+        });
+    </script>
 </body>
 </html>
